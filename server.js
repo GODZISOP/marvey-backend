@@ -10,10 +10,14 @@ app.use(express.json());
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: 'http://localhost:5173',  // Allow requests only from this origin
+  origin: [
+    'http://localhost:5173', // for local development
+    'https://marvey-new-clean-96n2.vercel.app' // your deployed frontend
+  ],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 
 // Basic GET route to check server status
 app.get('/', (req, res) => {
