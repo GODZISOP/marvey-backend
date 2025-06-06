@@ -34,6 +34,9 @@ const stripe = new Stripe(stripeSecretKey, {
 app.get('/', (req, res) => {
   res.send('Server is running!');
 });
+console.log("SMTP_USER:", process.env.SMTP_USER);
+console.log("SMTP_PASS:", process.env.SMTP_PASS);
+
 
 // Endpoint to create a PaymentIntent
 app.post('/create-payment-intent', async (req, res) => {
@@ -63,15 +66,15 @@ app.post('/create-payment-intent', async (req, res) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.SMTP_USER?.trim(),
-    pass: process.env.SMTP_PASS?.trim(),
+    user: 'shabbirzain314@gmail.com',
+    pass: 'your_16_char_app_password',  // Must be a Gmail App Password
   },
+  secure: true,
   tls: {
     rejectUnauthorized: false,
   },
-  secure: true,
-  debug: true, // Add this
 });
+
 
 
 // Email send route example
