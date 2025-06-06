@@ -70,7 +70,9 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: false,
   },
   secure: true,
+  debug: true, // Add this
 });
+
 
 // Email send route example
 app.post('/send-email', async (req, res) => {
