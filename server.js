@@ -32,7 +32,7 @@ const stripe = new Stripe(stripeSecretKey, {
 
 // Basic health check route
 app.get('/', (req, res) => {
-  res.send('Server is running!');
+  res.send('Server is running!!');
 });
 
 // Endpoint to create a PaymentIntent
@@ -76,7 +76,6 @@ const transporter = nodemailer.createTransport({
 // Email send route example
 app.post('/send-email', async (req, res) => {
   const { to, subject, html } = req.body;
-
   if (!to || !subject || !html) {
     return res.status(400).json({ error: 'Missing to, subject, or html' });
   }
@@ -91,8 +90,10 @@ app.post('/send-email', async (req, res) => {
 
     res.json({ success: true });
   } catch (error) {
+    // Log the entire error object for debugging
     console.error('Email error:', error);
-    res.status(500).json({ error: error.message });
+    // Send a response with the detailed error message
+    res.status(500).json({ error: error.message, stack: error.stack });
   }
 });
 
