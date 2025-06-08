@@ -76,13 +76,15 @@ const transporter = nodemailer.createTransport({
 // Email send route example
 app.post('/send-email', async (req, res) => {
   const { to, subject, html } = req.body;
+
   if (!to || !subject || !html) {
     return res.status(400).json({ error: 'Missing to, subject, or html' });
   }
 
   try {
     await transporter.sendMail({
-      from: process.env.CONTACT_EMAIL?.trim(),
+      // Use your desired email address here
+      from: 'appointments@studio.com',  // This is the "from" email address
       to,
       subject,
       html,
@@ -90,9 +92,7 @@ app.post('/send-email', async (req, res) => {
 
     res.json({ success: true });
   } catch (error) {
-    // Log the entire error object for debugging
     console.error('Email error:', error);
-    // Send a response with the detailed error message
     res.status(500).json({ error: error.message, stack: error.stack });
   }
 });
