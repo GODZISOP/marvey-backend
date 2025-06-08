@@ -84,7 +84,7 @@ app.post('/send-email', async (req, res) => {
   try {
     await transporter.sendMail({
       // Use your desired email address here
-      from: 'appointments@studio.com',  // This is the "from" email address
+      from: 'appointmentstudio1@studio.com',  // This is the "from" email address
       to,
       subject,
       html,
