@@ -66,11 +66,11 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER?.trim(),
     pass: process.env.SMTP_PASS?.trim(),
   },
-  secure: true,
+  secure: true, // Use SSL
   tls: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // Useful for self-signed certificates (or some environments)
   },
-  debug: true,  // Enable debugging
+  debug: true, // Enable debugging (logs detailed info)
 });
 
 // Email send route example
@@ -78,7 +78,7 @@ app.post('/send-email', async (req, res) => {
   const { to, subject, html } = req.body;
 
   if (!to || !subject || !html) {
-    return res.status(400).json({ error: 'Missing to, subject or htmlll' });
+    return res.status(400).json({ error: 'Missing to, subject, or html' });
   }
 
   try {
@@ -95,6 +95,7 @@ app.post('/send-email', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
