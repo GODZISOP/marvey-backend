@@ -21,7 +21,6 @@ app.use(cors({
 
 // Initialize Stripe with secret key, trimming whitespace/newlines
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY?.trim();
-
 if (!stripeSecretKey) {
   throw new Error('STRIPE_SECRET_KEY environment variable is missing');
 }
@@ -63,8 +62,8 @@ app.post('/create-payment-intent', async (req, res) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.SMTP_USER?.trim(),
-    pass: process.env.SMTP_PASS?.trim(),
+    user: process.env.SMTP_USER?.trim(), // Gmail account user
+    pass: process.env.SMTP_PASS?.trim(), // Gmail app password
   },
   secure: true, // Use SSL
   tls: {
@@ -83,8 +82,7 @@ app.post('/send-email', async (req, res) => {
 
   try {
     await transporter.sendMail({
-      // Use your desired email address here
-      from: 'appointmentstudio1@studio.com',  // This is the "from" email address
+      from: 'appointmentstudio1@studio.com', // Custom "from" address
       to,
       subject,
       html,
@@ -96,7 +94,6 @@ app.post('/send-email', async (req, res) => {
     res.status(500).json({ error: error.message, stack: error.stack });
   }
 });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
