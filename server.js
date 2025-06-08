@@ -70,6 +70,7 @@ const transporter = nodemailer.createTransport({
   tls: {
     rejectUnauthorized: false,
   },
+  debug: true,  // Enable debugging
 });
 
 // Email send route example
