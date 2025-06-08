@@ -66,8 +66,11 @@ app.post('/create-payment-intent', async (req, res) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'shabbirzain314@gmail.com',
-    pass: 'abcdefghtuvwxxyz', // <— Paste App Password here
+    auth: {
+  user: process.env.SMTP_USER?.trim(),
+  pass: process.env.SMTP_PASS?.trim(),
+},
+
   },
   secure: true,
   tls: {
