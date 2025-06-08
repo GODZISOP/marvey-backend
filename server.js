@@ -21,6 +21,7 @@ app.use(cors({
 
 // Initialize Stripe with secret key, trimming whitespace/newlines
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY?.trim();
+
 if (!stripeSecretKey) {
   throw new Error('STRIPE_SECRET_KEY environment variable is missing');
 }
@@ -62,8 +63,8 @@ app.post('/create-payment-intent', async (req, res) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.SMTP_USER?.trim(), // Gmail account user
-    pass: process.env.SMTP_PASS?.trim(), // Gmail app password
+    user: process.env.SMTP_USER?.trim(),
+    pass: process.env.SMTP_PASS?.trim(),
   },
   secure: true, // Use SSL
   tls: {
@@ -74,18 +75,19 @@ const transporter = nodemailer.createTransport({
 
 // Email send route example
 app.post('/send-email', async (req, res) => {
-  const { to, subject, html } = req.body;
+  const { subject, html } = req.body;
 
-  if (!to || !subject || !html) {
-    return res.status(400).json({ error: 'Missing to, subject, or html' });
+  if (!subject || !html) {
+    return res.status(400).json({ error: 'Missing subject or html' });
   }
 
   try {
+    // Sending a notification email to the client
     await transporter.sendMail({
-      from: 'appointmentstudio1@studio.com', // Custom "from" address
-      to:'appointmentstudio1@studio.com',
-      subject,
-      html,
+      from: 'appointmentstudio1@studio.com',  // Your system or your email address
+      to: 'appointmentstudio1@studio.com',   // Client's email address
+      subject: 'You got a new email',        // Subject for the notification
+      html: `<p>Hey Marvey,</p><p>You got a new email! Here's the message:</p><p><strong>Subject:</strong> ${subject}</p><p><strong>Message:</strong><br>${html}</p>`, // HTML content with dynamic subject and message
     });
 
     res.json({ success: true });
@@ -94,6 +96,8 @@ app.post('/send-email', async (req, res) => {
     res.status(500).json({ error: error.message, stack: error.stack });
   }
 });
+
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
