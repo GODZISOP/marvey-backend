@@ -67,14 +67,13 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'shabbirzain314@gmail.com',
-    pass: 'your_16_char_app_password',  // Must be a Gmail App Password
+    pass: 'abcdefghtuvwxxyz', // <— Paste App Password here
   },
   secure: true,
   tls: {
     rejectUnauthorized: false,
   },
 });
-
 
 
 // Email send route example
