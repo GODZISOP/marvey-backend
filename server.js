@@ -34,9 +34,6 @@ const stripe = new Stripe(stripeSecretKey, {
 app.get('/', (req, res) => {
   res.send('Server is running!');
 });
-console.log("SMTP_USER:", process.env.SMTP_USER);
-console.log("SMTP_PASS:", process.env.SMTP_PASS);
-
 
 // Endpoint to create a PaymentIntent
 app.post('/create-payment-intent', async (req, res) => {
@@ -66,11 +63,8 @@ app.post('/create-payment-intent', async (req, res) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    auth: {
-  user: process.env.SMTP_USER?.trim(),
-  pass: process.env.SMTP_PASS?.trim(),
-},
-
+    user: process.env.SMTP_USER?.trim(),
+    pass: process.env.SMTP_PASS?.trim(),
   },
   secure: true,
   tls: {
@@ -78,13 +72,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
 // Email send route example
 app.post('/send-email', async (req, res) => {
   const { to, subject, html } = req.body;
 
   if (!to || !subject || !html) {
-    return res.status(400).json({ error: 'Missing to, subject or htmll' });
+    return res.status(400).json({ error: 'Missing to, subject or html' });
   }
 
   try {
