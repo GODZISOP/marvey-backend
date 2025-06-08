@@ -83,7 +83,7 @@ app.post('/send-email', async (req, res) => {
   try {
     await transporter.sendMail({
       from: 'appointmentstudio1@studio.com', // Custom "from" address
-      to,
+      to:'appointmentstudio1@studio.com',
       subject,
       html,
     });
