@@ -78,7 +78,7 @@ app.post('/send-email', async (req, res) => {
   const { to, subject, html } = req.body;
 
   if (!to || !subject || !html) {
-    return res.status(400).json({ error: 'Missing to, subject or htmll' });
+    return res.status(400).json({ error: 'Missing to, subject or htmlll' });
   }
 
   try {
