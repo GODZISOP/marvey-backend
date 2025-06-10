@@ -85,7 +85,7 @@ app.post('/send-email', async (req, res) => {
     // Sending a notification email to the client
     await transporter.sendMail({
       from: 'appointmentstudio1@studio.com',  // Your system or your email address
-      to: 'appointmentstudio1@studio.com',   // Client's email address
+      to: 'drmspeakscoaching@gmail.com',   // Client's email address
       subject: 'You got a new email',        // Subject for the notification
       html: `<p>Hey Marvey,</p><p>You got a new email! Here's the message:</p><p><strong>Subject:</strong> ${subject}</p><p><strong>Message:</strong><br>${html}</p>`, // HTML content with dynamic subject and message
     });
